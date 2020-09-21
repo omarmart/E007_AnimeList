@@ -31,7 +31,7 @@ public class App {
         System.out.println("search -status [status]: Shows anime with the specified status");
         System.out.println("exit: Exits the program");
 
-        //cambio
+        //pinga
 
         // poder meter search -anime Shingeki -status COMPLETED -genre action
         // poder buscar el anime por id
