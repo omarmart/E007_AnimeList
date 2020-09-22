@@ -26,15 +26,20 @@ public class App {
 
     private static void showMenu(AniList aniList) {
         System.out.println("Available commands: ");
-        System.out.println("search [anime]: Shows the properties of anime, or similar anime names if one is not found");
-        System.out.println("search -genre [genre]: Shows anime with the specified genre");
-        System.out.println("search -status [status]: Shows anime with the specified status");
+
+        //TODO improve Menu (single command explanation + subcommmands)
+        System.out.println("show [animeID]: Shows the properties of anime, or similar anime names if one is not found");
+        System.out.println(
+                "search -anime [animeName]: Shows a list of anime name/id with similar name to the one searched");
+        System.out.println("search -genre [genre]: Shows a list of anime name/id with the specified genre");
+        System.out.println("search -status [status]: Shows a list of anime name/id with the specified status");
+        System.out.println("change [animeID] -status [status]: Changes the status of the specified anime");
+        System.out.println("change [animeID] -score [number]: Changes the score of the specified anime"); //number only between 0 and 10
+        System.out.println("change [animeID] -progress [number]: Changes the episode progress of the specified anime");//number only between 0 and total episodes
         System.out.println("exit: Exits the program");
 
-        //pinga
-
         // poder meter search -anime Shingeki -status COMPLETED -genre action
-        // poder buscar el anime por id
+        // poder buscar el anime por id → mostar el id de los animes al usar search
         // search para buscar el anime
         // show para mostrar la info de un anime
         // Obligar a los usuarios a que metan el nombre de los animes dentro de ""
@@ -89,12 +94,15 @@ public class App {
     }
 
     public static void printAnime(Anime anime) {
+        System.out.println("- ↓ -----ANIME INFO----- ↓ -");
+        System.out.println("Id: " + anime.getId());
         System.out.println("Name: " + anime.getName());
         System.out.println("Status: " + anime.getStatus());
         System.out.println("Score: " + anime.getScore());
         System.out.println("Progress: " + anime.getProgress());
         System.out.println("Episodes: " + anime.getEpisodes());
         System.out.println("Genre: " + anime.getGenre());
+        System.out.println("- ↑ -----ANIME INFO----- ↑ -");
     }
 
 }

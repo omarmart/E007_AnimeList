@@ -48,4 +48,16 @@ public class Anime {
         return genre;
     }
 
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
+
 }

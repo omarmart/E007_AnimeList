@@ -78,15 +78,27 @@ public class AniList {
     }
 
     public List<String> getAnimeByGenre(Genre genre) {
-        List<String> similarNames = new ArrayList<>();
+        List<String> nameList = new ArrayList<>();
 
-        //for (Anime anime : animeList) {
-        //    if (anime.getName().contains(name)) {
-        //        similarNames.add(anime.getName());
-        //    }
-        //}
+        for (Anime anime : animeList) {
+            if (anime.getGenre() == genre) {
+                nameList.add(anime.getName());
+            }
+        }
 
-        return similarNames;
+        return nameList;
+    }
+
+    public List<String> getAnimeByStatus(Status status) {
+        List<String> nameList = new ArrayList<>();
+
+        for (Anime anime : animeList) {
+            if (anime.getStatus() == status) {
+                nameList.add(anime.getName());
+            }
+        }
+
+        return nameList;
     }
 
 }
