@@ -3,29 +3,31 @@ package com.omar;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class AniList {
+    private String fileLocation;
     private List<Anime> animeList;
 
-    public AniList(String fileLocation) throws FileNotFoundException {
+    public AniList(String fileLocation) throws FileNotFoundException, BadFormatException {
         animeList = new ArrayList<>();
         loadAnimeList(fileLocation);
+        this.fileLocation = fileLocation;
     }
 
     public List<Anime> getAniList() {
         return animeList;
     }
 
-    public void loadAnimeList(String fileLocation) throws FileNotFoundException {
+    public void loadAnimeList(String fileLocation) throws FileNotFoundException, BadFormatException {
         File file = new File(fileLocation);
-        FileInputStream fileStream;
-        Scanner sc;
-        fileStream = new FileInputStream(file);
+        Scanner sc = new Scanner(new FileInputStream(file));
 
-        sc = new Scanner(fileStream);
+        int position = 0;
 
         while (sc.hasNextLine()) {
             String nextLine = sc.nextLine();
@@ -33,21 +35,35 @@ public class AniList {
 
             if (parsedLine[0].equals(""))
                 continue;
+            try {
+                if (true) { // TODO: verifyLine(parsedLine)
+                    Anime newAnime;
+                    String id = parsedLine[0];
+                    String name = parsedLine[1];
+                    Status status = Status.valueOf(parsedLine[2]); // Controlar excepcion
+                    int score = Integer.parseInt(parsedLine[3]); // Controlar excepcion
+                    int progress = Integer.parseInt(parsedLine[4]);
+                    int episodes = Integer.parseInt(parsedLine[5]);
+                    Genre genre = Genre.valueOf(parsedLine[6]);
 
-            if (true) { // TODO: verifyLine(parsedLine)
-                Anime newAnime;
-                String id = parsedLine[0];
-                String name = parsedLine[1];
-                Status status = Status.valueOf(parsedLine[2]); // Controlar excepcion
-                int score = Integer.parseInt(parsedLine[3]); // Controlar excepcion
-                int progress = Integer.parseInt(parsedLine[4]);
-                int episodes = Integer.parseInt(parsedLine[5]);
-                Genre genre = Genre.valueOf(parsedLine[6]);
+                    newAnime = new Anime(id, name, status, score, progress, episodes, genre);
 
-                newAnime = new Anime(id, name, status, score, progress, episodes, genre);
-
-                animeList.add(newAnime);
+                    animeList.add(newAnime);
+                }
+            } catch (Exception e) {
+                throw new BadFormatException(position); //TODO: preguntar como paso la excepcion al main (para imprimir alli) sin parar de añadir anime
             }
+            position++;
+        }
+    }
+
+    public void updateAnimeFile(Anime anime) {
+        //TODO Modificar la linea apropiada del fichero cada vez que se cambie las propiedades de un anime
+        FileWriter writer;
+        try {
+            writer = new FileWriter(fileLocation);
+            writer.write("TODO");
+        } catch (IOException ex) {
 
         }
     }

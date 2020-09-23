@@ -24,6 +24,9 @@ public class App {
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not found, restart and try again");
+        } catch (BadFormatException e) {
+            System.out.println("File not formatted propperly");
+            System.out.println("Line with error: " + e.getBadLine());
         }
     }
 
@@ -63,12 +66,18 @@ public class App {
 
             case "show":
                 if (tokens.length == 2) {
-                    int animeId = Integer.parseInt(tokens[1]);
-                    printAnime(aniList.getAniList().get(animeId));
+                    try {
+                        int animeId = Integer.parseInt(tokens[1]);
+                        printAnime(aniList.getAniList().get(animeId));
+                    } catch (NumberFormatException e) {
+                        System.out.println("Please insert only numbers after the show command");
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("This is not a valid id");
+                    }
                 }
                 break;
 
-            case "search":
+            case "search": //TODO: Search
                 /**
                  * 
                  if (tokens.length == 2) {
@@ -102,8 +111,8 @@ public class App {
                  */
                 break;
 
-            case "change":
-
+            case "change": //TODO: Change
+                //After AniList changes → updateAnimeFile
                 break;
 
             default:
