@@ -12,14 +12,14 @@ public class AniList {
 
     public AniList(String fileLocation) throws FileNotFoundException {
         animeList = new ArrayList<>();
-        loadAnimes(fileLocation);
+        loadAnimeList(fileLocation);
     }
 
     public List<Anime> getAniList() {
         return animeList;
     }
 
-    public void loadAnimes(String fileLocation) throws FileNotFoundException {
+    public void loadAnimeList(String fileLocation) throws FileNotFoundException {
         File file = new File(fileLocation);
         FileInputStream fileStream;
         Scanner sc;
@@ -50,22 +50,10 @@ public class AniList {
             }
 
         }
-
-        // TODO: Cerrar el scanner
     }
 
-    public Anime getAnimeByName(String name) {
-        for (Anime anime : animeList) {
-            if (anime.getName().equals(name)) {
-                return anime;
-            }
-        }
-
-        return null;
-
-    }
-
-    public List<String> getSimilarNames(String name) {
+    // TODO ↓↓↓ MERGE ALL INTO 1 FUNCTION ↓↓↓
+    public List<String> searchAnime(String name) {
         List<String> similarNames = new ArrayList<>();
 
         for (Anime anime : animeList) {
@@ -77,7 +65,7 @@ public class AniList {
         return similarNames;
     }
 
-    public List<String> getAnimeByGenre(Genre genre) {
+    public List<String> searchAnime(Genre genre) {
         List<String> nameList = new ArrayList<>();
 
         for (Anime anime : animeList) {
@@ -89,7 +77,7 @@ public class AniList {
         return nameList;
     }
 
-    public List<String> getAnimeByStatus(Status status) {
+    public List<String> searchAnime(Status status) {
         List<String> nameList = new ArrayList<>();
 
         for (Anime anime : animeList) {
@@ -100,5 +88,6 @@ public class AniList {
 
         return nameList;
     }
+    // ↑↑↑ MERGE ALL INTO 1 FUNCTION ↑↑↑
 
 }
