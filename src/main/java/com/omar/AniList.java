@@ -33,8 +33,11 @@ public class AniList {
             String nextLine = sc.nextLine();
             String[] parsedLine = nextLine.split(",");
 
-            if (parsedLine[0].equals(""))
+            if (position == 0) {
+                position++;
                 continue;
+            }
+
             try {
                 if (true) { // TODO: verifyLine(parsedLine)
                     Anime newAnime;
