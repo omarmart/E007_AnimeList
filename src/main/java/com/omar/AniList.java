@@ -66,7 +66,7 @@ public class AniList {
         writer = new FileWriter(fileLocation);
 
         for (Anime anime : animeList) {
-            writer.write(anime.parseAnimeToString(anime));
+            writer.write(anime.parseAnimeToString());
         }
 
         writer.close();

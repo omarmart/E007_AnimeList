@@ -62,7 +62,7 @@ public class Anime {
         this.progress = progress;
     }
 
-    public String parseAnimeToString(Anime anime) {
+    public String parseAnimeToString() {
         StringWriter aniString = new StringWriter();
         aniString.write(this.id);
         aniString.write(",");
