@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -69,6 +70,19 @@ public class AniList {
         } catch (IOException ex) {
 
         }
+    }
+
+    public String parseAnimeToString(Anime anime) {
+        StringWriter aniString = new StringWriter();
+        aniString.write(anime.getId());
+        aniString.write(anime.getName());
+        aniString.write(anime.getStatus().toString());
+        aniString.write(anime.getScore());
+        aniString.write(anime.getProgress());
+        aniString.write(anime.getEpisodes());
+        aniString.write(anime.getGenre().toString());
+
+        return aniString.toString();
     }
 
     // TODO ↓↓↓ MERGE ALL INTO 1 FUNCTION ↓↓↓
