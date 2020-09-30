@@ -68,26 +68,13 @@ public class AniList {
             writer = new FileWriter(fileLocation);
 
             for (Anime anime : animeList) {
-                writer.write(parseAnimeToString(anime));
+                writer.write(anime.parseAnimeToString(anime));
             }
 
             writer.close();
         } catch (IOException ex) {
 
         }
-    }
-
-    public String parseAnimeToString(Anime anime) {
-        StringWriter aniString = new StringWriter();
-        aniString.write(anime.getId());
-        aniString.write(anime.getName());
-        aniString.write(anime.getStatus().toString());
-        aniString.write(anime.getScore());
-        aniString.write(anime.getProgress());
-        aniString.write(anime.getEpisodes());
-        aniString.write(anime.getGenre().toString());
-
-        return aniString.toString();
     }
 
     // TODO ↓↓↓ MERGE ALL INTO 1 FUNCTION ↓↓↓

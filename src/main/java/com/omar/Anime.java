@@ -1,5 +1,7 @@
 package com.omar;
 
+import java.io.StringWriter;
+
 public class Anime {
 
     private String id;
@@ -58,6 +60,19 @@ public class Anime {
 
     public void setProgress(int progress) {
         this.progress = progress;
+    }
+
+    public String parseAnimeToString(Anime anime) {
+        StringWriter aniString = new StringWriter();
+        aniString.write(this.id);
+        aniString.write(this.name);
+        aniString.write(this.status.toString());
+        aniString.write(this.score);
+        aniString.write(this.progress);
+        aniString.write(this.episodes);
+        aniString.write(this.genre.toString());
+
+        return aniString.toString();
     }
 
 }
