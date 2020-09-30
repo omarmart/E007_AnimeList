@@ -61,12 +61,17 @@ public class AniList {
         }
     }
 
-    public void updateAnimeFile(Anime anime) {
+    public void updateAnimeFile() {
         //TODO Modificar la linea apropiada del fichero cada vez que se cambie las propiedades de un anime
         FileWriter writer;
         try {
             writer = new FileWriter(fileLocation);
-            writer.write("TODO");
+
+            for (Anime anime : animeList) {
+                writer.write(parseAnimeToString(anime));
+            }
+
+            writer.close();
         } catch (IOException ex) {
 
         }
