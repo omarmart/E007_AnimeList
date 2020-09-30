@@ -60,6 +60,14 @@ public class AniList {
         }
     }
 
+    public void updateAnimeList(Anime changedAnime) {
+        for (Anime anime : animeList) {
+            if (anime.getId().equals(changedAnime.getId())) {
+                anime = changedAnime;
+            }
+        }
+    }
+
     public void updateAnimeFile() throws IOException {
         //TODO Modificar la linea apropiada del fichero cada vez que se cambie las propiedades de un anime
         FileWriter writer;
