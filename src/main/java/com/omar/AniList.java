@@ -61,20 +61,16 @@ public class AniList {
         }
     }
 
-    public void updateAnimeFile() {
+    public void updateAnimeFile() throws IOException {
         //TODO Modificar la linea apropiada del fichero cada vez que se cambie las propiedades de un anime
         FileWriter writer;
-        try {
-            writer = new FileWriter(fileLocation);
+        writer = new FileWriter(fileLocation);
 
-            for (Anime anime : animeList) {
-                writer.write(anime.parseAnimeToString(anime));
-            }
-
-            writer.close();
-        } catch (IOException ex) {
-
+        for (Anime anime : animeList) {
+            writer.write(anime.parseAnimeToString(anime));
         }
+
+        writer.close();
     }
 
     // TODO ↓↓↓ MERGE ALL INTO 1 FUNCTION ↓↓↓
