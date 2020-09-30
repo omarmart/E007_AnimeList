@@ -65,11 +65,17 @@ public class Anime {
     public String parseAnimeToString(Anime anime) {
         StringWriter aniString = new StringWriter();
         aniString.write(this.id);
+        aniString.write(",");
         aniString.write(this.name);
+        aniString.write(",");
         aniString.write(this.status.toString());
+        aniString.write(",");
         aniString.write(this.score);
+        aniString.write(",");
         aniString.write(this.progress);
+        aniString.write(",");
         aniString.write(this.episodes);
+        aniString.write(",");
         aniString.write(this.genre.toString());
 
         return aniString.toString();
