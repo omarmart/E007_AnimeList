@@ -2,7 +2,7 @@ package com.omar;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class App {
@@ -87,27 +87,40 @@ public class App {
     }
 
     private static void search(AniList aniList, String input, String[] tokens) {
+        Optional<AniList> filtered = Optional.empty();
         try {
-
             for (int i = 0; i < tokens.length; i++) {
                 switch (tokens[i]) {
                     case "-anime":
                         //TODO comprobar que no me meten mas de dos "
                         String searchName = input.substring(input.indexOf("\"") + 1, input.lastIndexOf("\""));
-                        aniList.searchAnime(searchName);
+                        if (filtered.isPresent()) {
+                            filtered.of(filtered.get().searchAnime(searchName));
+                        } else {
+                            filtered.of(aniList.searchAnime(searchName));
+                        }
                         break;
                     case "-genre":
                         Genre searchGenre = Genre.valueOf(tokens[i + 1]);
-                        aniList.searchAnime(searchGenre);
+                        if (filtered.isPresent()) {
+                            filtered.of(filtered.get().searchAnime(searchGenre));
+                        } else {
+                            filtered.of(aniList.searchAnime(searchGenre));
+                        }
                         break;
 
                     case "-status":
                         Status searchStatus = Status.valueOf(tokens[i + 1]);
-                        aniList.searchAnime(searchStatus);
-
+                        if (filtered.isPresent()) {
+                            filtered.of(filtered.get().searchAnime(searchStatus));
+                        } else {
+                            filtered.of(aniList.searchAnime(searchStatus));
+                        }
                         break;
                 }
             }
+
+            //TODO: Print id/name of filtered list
 
         } catch (IllegalArgumentException illE) {
             System.out.println("Status is not a valid");
