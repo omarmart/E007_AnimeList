@@ -55,7 +55,7 @@ public class App {
 
     private static void processCommand(AniList aniList, String input) {
         //TODO implementar propio split que no tenga los espacios dentro de las comillas
-        String[] tokens = input.split(" ");
+        String[] tokens = splitExceptQuotes(input);
         String command = tokens[0];
 
         switch (command) {
@@ -99,7 +99,7 @@ public class App {
             for (int i = 0; i < tokens.length; i++) {
                 switch (tokens[i]) {
                     case "-anime":
-                        name = Optional.of(input.substring(input.indexOf("\"") + 1, input.lastIndexOf("\"")));
+                        name = Optional.of(tokens[i + 1]);
                         break;
                     case "-genre":
                         genre = Optional.of(Genre.valueOf(tokens[i + 1]));
