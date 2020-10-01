@@ -125,7 +125,7 @@ public class App {
     private static void changeAnime(AniList aniList, String[] tokens) {
         try {
             int animeId = Integer.parseInt(tokens[1]);
-            Anime toChange = aniList.getAniList().get(animeId + 1);
+            Anime toChange = aniList.getAniList().get(animeId - 1);
 
             for (int i = 0; i < tokens.length; i++) {
                 switch (tokens[i]) {
@@ -156,6 +156,7 @@ public class App {
 
             aniList.updateAnimeList(toChange);
             aniList.updateAnimeFile();
+            System.out.println("Change succesfull!");
 
         } catch (NumberFormatException numE) {
             System.out.println("Please insert only numbers after change/progress/score");
