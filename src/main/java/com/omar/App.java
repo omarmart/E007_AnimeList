@@ -120,10 +120,10 @@ public class App {
                 }
             }
 
-            //TODO: Print id/name of filtered list
+            printAnilist(filtered.get());
 
         } catch (IllegalArgumentException illE) {
-            System.out.println("Status is not a valid");
+            System.out.println("Status/Genre is not a valid");
         }
     }
 
@@ -175,6 +175,7 @@ public class App {
     }
 
     public static void printAnime(Anime anime) {
+        System.out.println("");
         System.out.println("- ↓ -----ANIME INFO----- ↓ -");
         System.out.println("Id: " + anime.getId());
         System.out.println("Name: " + anime.getName());
@@ -184,6 +185,16 @@ public class App {
         System.out.println("Episodes: " + anime.getEpisodes());
         System.out.println("Genre: " + anime.getGenre());
         System.out.println("- ↑ -----ANIME INFO----- ↑ -");
+        System.out.println("");
+    }
+
+    public static void printAnilist(AniList animeList) {
+        for (Anime anime : animeList.getAniList()) {
+            System.out.println("");
+            System.out.println("Id: " + anime.getId());
+            System.out.println("Name: " + anime.getName());
+            System.out.println("");
+        }
     }
 
 }
