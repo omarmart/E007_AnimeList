@@ -2,6 +2,7 @@ package com.omar;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -184,6 +185,28 @@ public class App {
             System.out.println("Name: " + anime.getName());
             System.out.println("");
         }
+    }
+
+    public static String[] splitExceptQuotes(String orig) {
+        List<String> result = new ArrayList<>();
+        StringBuilder fragment = new StringBuilder();
+        boolean insideQuotes = false;
+
+        for (char c : orig.toCharArray()) {
+
+            if (c == ' ' && !insideQuotes) {
+                result.add(fragment.toString());
+                fragment = new StringBuilder();
+            } else if (c == '"') {
+                insideQuotes = !insideQuotes;
+            } else {
+                fragment.append(c);
+            }
+        }
+
+        result.add(fragment.toString());
+
+        return result.toArray(new String[0]);
     }
 
 }
