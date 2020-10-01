@@ -19,6 +19,10 @@ public class AniList {
         this.fileLocation = fileLocation;
     }
 
+    private AniList(List<Anime> animeList) {
+        this.animeList = animeList;
+    }
+
     public List<Anime> getAniList() {
         return animeList;
     }
@@ -79,40 +83,40 @@ public class AniList {
         writer.close();
     }
 
-    public List<String> searchAnime(String name) {
-        List<String> similarNames = new ArrayList<>();
+    public AniList searchAnime(String name) {
+        List<Anime> searchedAnime = new ArrayList<>();
 
         for (Anime anime : animeList) {
             if (anime.getName().contains(name)) {
-                similarNames.add(anime.getName());
+                searchedAnime.add(anime);
             }
         }
 
-        return similarNames;
+        return new AniList(searchedAnime);
     }
 
-    public List<String> searchAnime(Genre genre) {
-        List<String> nameList = new ArrayList<>();
+    public AniList searchAnime(Genre genre) {
+        List<Anime> searchedAnime = new ArrayList<>();
 
         for (Anime anime : animeList) {
             if (anime.getGenre() == genre) {
-                nameList.add(anime.getName());
+                searchedAnime.add(anime);
             }
         }
 
-        return nameList;
+        return new AniList(searchedAnime);
     }
 
-    public List<String> searchAnime(Status status) {
-        List<String> nameList = new ArrayList<>();
+    public AniList searchAnime(Status status) {
+        List<Anime> searchedAnime = new ArrayList<>();
 
         for (Anime anime : animeList) {
             if (anime.getStatus() == status) {
-                nameList.add(anime.getName());
+                searchedAnime.add(anime);
             }
         }
 
-        return nameList;
+        return new AniList(searchedAnime);
     }
 
 }
