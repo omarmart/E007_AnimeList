@@ -2,6 +2,8 @@ package com.omar;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -51,6 +53,7 @@ public class App {
     }
 
     private static void processCommand(AniList aniList, String input) {
+        //TODO implementar propio split que no tenga los espacios dentro de las comillas
         String[] tokens = input.split(" ");
         String command = tokens[0];
 
@@ -87,40 +90,26 @@ public class App {
     }
 
     private static void search(AniList aniList, String input, String[] tokens) {
-        Optional<AniList> filtered = Optional.empty();
+        Optional<Status> status = Optional.empty();
+        Optional<Genre> genre = Optional.empty();
+        Optional<String> name = Optional.empty();
+
         try {
             for (int i = 0; i < tokens.length; i++) {
                 switch (tokens[i]) {
                     case "-anime":
-                        //TODO comprobar que no me meten mas de dos "
-                        String searchName = input.substring(input.indexOf("\"") + 1, input.lastIndexOf("\""));
-                        if (filtered.isPresent()) {
-                            filtered.of(filtered.get().searchAnime(searchName));
-                        } else {
-                            filtered.of(aniList.searchAnime(searchName));
-                        }
+                        name = Optional.of(input.substring(input.indexOf("\"") + 1, input.lastIndexOf("\"")));
                         break;
                     case "-genre":
-                        Genre searchGenre = Genre.valueOf(tokens[i + 1]);
-                        if (filtered.isPresent()) {
-                            filtered.of(filtered.get().searchAnime(searchGenre));
-                        } else {
-                            filtered.of(aniList.searchAnime(searchGenre));
-                        }
+                        genre = Optional.of(Genre.valueOf(tokens[i + 1]));
                         break;
-
                     case "-status":
-                        Status searchStatus = Status.valueOf(tokens[i + 1]);
-                        if (filtered.isPresent()) {
-                            filtered.of(filtered.get().searchAnime(searchStatus));
-                        } else {
-                            filtered.of(aniList.searchAnime(searchStatus));
-                        }
+                        status = Optional.of(Status.valueOf(tokens[i + 1]));
                         break;
                 }
             }
 
-            printAnilist(filtered.get());
+            printAnilist(aniList.searchAnime(status, genre, name));
 
         } catch (IllegalArgumentException illE) {
             System.out.println("Status/Genre is not a valid");
@@ -188,8 +177,8 @@ public class App {
         System.out.println("");
     }
 
-    public static void printAnilist(AniList animeList) {
-        for (Anime anime : animeList.getAniList()) {
+    public static void printAnilist(List<Anime> animeList) {
+        for (Anime anime : animeList) {
             System.out.println("");
             System.out.println("Id: " + anime.getId());
             System.out.println("Name: " + anime.getName());

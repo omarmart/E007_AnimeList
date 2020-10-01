@@ -6,8 +6,12 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
+
+import javax.swing.undo.StateEdit;
 
 public class AniList {
     private String fileLocation;
@@ -83,40 +87,36 @@ public class AniList {
         writer.close();
     }
 
-    public AniList searchAnime(String name) {
+    public List<Anime> searchAnime(Optional<Status> status, Optional<Genre> genre, Optional<String> name) {
         List<Anime> searchedAnime = new ArrayList<>();
+        Iterator<Anime> it = this.animeList.iterator();
 
-        for (Anime anime : animeList) {
-            if (anime.getName().contains(name)) {
-                searchedAnime.add(anime);
+        while (it.hasNext()) {
+            Anime toCheck = it.next();
+
+            if (status.isPresent()) {
+                Status filter = status.get();
+                if (toCheck.getStatus() != filter) {
+                    it.remove();
+                }
+            }
+
+            if (genre.isPresent()) {
+                Genre filter = genre.get();
+                if (toCheck.getGenre() != filter) {
+                    it.remove();
+                }
+            }
+
+            if (name.isPresent()) {
+                String filter = name.get();
+                if (!toCheck.getName().contains(filter)) {
+                    it.remove();
+                }
             }
         }
 
-        return new AniList(searchedAnime);
-    }
-
-    public AniList searchAnime(Genre genre) {
-        List<Anime> searchedAnime = new ArrayList<>();
-
-        for (Anime anime : animeList) {
-            if (anime.getGenre() == genre) {
-                searchedAnime.add(anime);
-            }
-        }
-
-        return new AniList(searchedAnime);
-    }
-
-    public AniList searchAnime(Status status) {
-        List<Anime> searchedAnime = new ArrayList<>();
-
-        for (Anime anime : animeList) {
-            if (anime.getStatus() == status) {
-                searchedAnime.add(anime);
-            }
-        }
-
-        return new AniList(searchedAnime);
+        return searchedAnime;
     }
 
 }
