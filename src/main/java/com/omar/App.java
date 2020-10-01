@@ -5,10 +5,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Hello world!
- *
- */
 public class App {
 
     private static Scanner sc = new Scanner(System.in);
@@ -48,11 +44,9 @@ public class App {
 
         System.out.println("change [animeID]: Changes the properties of the specified anime");
         System.out.println("    -status [status]: Changes the status");
-        System.out.println("    -score [number]: Changes the score"); //number only between 0 and 10
-        System.out.println("    -progress [number]: Changes the episode progress");//number only between 0 and total episodes
+        System.out.println("    -score [number]: Changes the score");
+        System.out.println("    -progress [number]: Changes the episode progress");
 
-        // poder meter search -anime Shingeki -status COMPLETED -genre action
-        // poder buscar el anime por id → mostar el id de los animes al usar search
         // Obligar a los usuarios a que metan el nombre de los animes dentro de ""
     }
 
@@ -112,7 +106,7 @@ public class App {
                  */
                 break;
 
-            case "change": //TODO: Change
+            case "change":
                 changeAnime(aniList, tokens);
                 break;
 

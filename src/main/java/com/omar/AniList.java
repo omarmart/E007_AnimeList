@@ -43,8 +43,8 @@ public class AniList {
                     Anime newAnime;
                     String id = parsedLine[0];
                     String name = parsedLine[1];
-                    Status status = Status.valueOf(parsedLine[2]); // Controlar excepcion
-                    int score = Integer.parseInt(parsedLine[3]); // Controlar excepcion
+                    Status status = Status.valueOf(parsedLine[2]);
+                    int score = Integer.parseInt(parsedLine[3]);
                     int progress = Integer.parseInt(parsedLine[4]);
                     int episodes = Integer.parseInt(parsedLine[5]);
                     Genre genre = Genre.valueOf(parsedLine[6]);
@@ -54,7 +54,7 @@ public class AniList {
                     animeList.add(newAnime);
                 }
             } catch (Exception e) {
-                throw new BadFormatException(position); //TODO: preguntar como paso la excepcion al main (para imprimir alli) sin parar de añadir anime
+                throw new BadFormatException(position);
             }
             position++;
         }
@@ -69,7 +69,6 @@ public class AniList {
     }
 
     public void updateAnimeFile() throws IOException {
-        //TODO Modificar la linea apropiada del fichero cada vez que se cambie las propiedades de un anime
         FileWriter writer;
         writer = new FileWriter(fileLocation);
 
@@ -80,7 +79,6 @@ public class AniList {
         writer.close();
     }
 
-    // TODO ↓↓↓ MERGE ALL INTO 1 FUNCTION ↓↓↓
     public List<String> searchAnime(String name) {
         List<String> similarNames = new ArrayList<>();
 
@@ -116,6 +114,5 @@ public class AniList {
 
         return nameList;
     }
-    // ↑↑↑ MERGE ALL INTO 1 FUNCTION ↑↑↑
 
 }
