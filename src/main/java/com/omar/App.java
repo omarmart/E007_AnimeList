@@ -68,7 +68,7 @@ public class App {
                 if (tokens.length == 2) {
                     try {
                         int animeId = Integer.parseInt(tokens[1]);
-                        printAnime(aniList.getAniList().get(animeId));
+                        printAnime(aniList.getAniList().get(animeId + 1));
                     } catch (NumberFormatException e) {
                         System.out.println("Please insert only numbers after the show command");
                     } catch (IndexOutOfBoundsException e) {
