@@ -88,8 +88,8 @@ public class AniList {
     }
 
     public List<Anime> searchAnime(Optional<Status> status, Optional<Genre> genre, Optional<String> name) {
-        List<Anime> searchedAnime = new ArrayList<>();
-        Iterator<Anime> it = this.animeList.iterator();
+        List<Anime> searchedAnime = new ArrayList<>(this.animeList);
+        Iterator<Anime> it = searchedAnime.iterator();
 
         while (it.hasNext()) {
             Anime toCheck = it.next();
@@ -107,7 +107,6 @@ public class AniList {
                     it.remove();
                 }
             }
-
             if (name.isPresent()) {
                 String filter = name.get();
                 if (!toCheck.getName().contains(filter)) {
