@@ -72,38 +72,8 @@ public class App {
                 }
                 break;
 
-            case "search": //TODO: Search
-                /**
-                 * 
-                 if (tokens.length == 2) {
-                 String animeName = tokens[1];
-                 Anime anime = aniList.getAnimeByName(animeName);
-                
-                 if (anime != null) {
-                     printAnime(anime);
-                 } else {
-                     List<String> similarNames = aniList.searchAnime(animeName);
-                     System.out.println("Anime not found, anime with similar names:");
-                     for (String name : similarNames) {
-                         System.out.println(name);
-                     }
-                 }
-                
-                 } else {
-                
-                 String filter = tokens[1];
-                 switch (filter) {
-                     case "-genre":
-                
-                         break;
-                
-                     case "-status":
-                         break;
-                
-                 }
-                 }
-                 * 
-                 */
+            case "search":
+                search(aniList, input, tokens);
                 break;
 
             case "change":
@@ -113,6 +83,34 @@ public class App {
             default:
                 System.out.println("Unknown command " + command);
                 break;
+        }
+    }
+
+    private static void search(AniList aniList, String input, String[] tokens) {
+        try {
+
+            for (int i = 0; i < tokens.length; i++) {
+                switch (tokens[i]) {
+                    case "-anime":
+                        //TODO comprobar que no me meten mas de dos "
+                        String searchName = input.substring(input.indexOf("\"") + 1, input.lastIndexOf("\""));
+                        aniList.searchAnime(searchName);
+                        break;
+                    case "-genre":
+                        Genre searchGenre = Genre.valueOf(tokens[i + 1]);
+                        aniList.searchAnime(searchGenre);
+                        break;
+
+                    case "-status":
+                        Status searchStatus = Status.valueOf(tokens[i + 1]);
+                        aniList.searchAnime(searchStatus);
+
+                        break;
+                }
+            }
+
+        } catch (IllegalArgumentException illE) {
+            System.out.println("Status is not a valid");
         }
     }
 
