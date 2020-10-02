@@ -77,7 +77,7 @@ public class App {
                 break;
 
             case "search":
-                search(aniList, input, tokens);
+                search(aniList, tokens);
                 break;
 
             case "change":
@@ -90,7 +90,7 @@ public class App {
         }
     }
 
-    private static void search(AniList aniList, String input, String[] tokens) {
+    private static void search(AniList aniList, String[] tokens) {
         Optional<Status> status = Optional.empty();
         Optional<Genre> genre = Optional.empty();
         Optional<String> name = Optional.empty();
