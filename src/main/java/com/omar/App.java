@@ -3,10 +3,13 @@ package com.omar;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.function.Consumer;
 
 public class App {
 
@@ -14,13 +17,16 @@ public class App {
     private static boolean executing = true;
 
     public static void main(String[] args) {
+
         try {
             AniList aniList = new AniList("AnimeList.csv");
             showMenu();
 
+            Map<String, Consumer<String[]>> commands = loadCommands(aniList);
+
             while (executing) {
                 String input = sc.nextLine();
-                processCommand(aniList, input);
+                processCommand(commands, input);
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not found, restart and try again");
@@ -28,6 +34,32 @@ public class App {
             System.out.println("File not formatted propperly");
             System.out.println("Line with error: " + e.getBadLine());
         }
+    }
+
+    private static Map<String, Consumer<String[]>> loadCommands(AniList aniList) {
+        Map<String, Consumer<String[]>> commands = new HashMap<>();
+        commands.put("exit", (t) -> {
+            executing = false;
+        });
+        commands.put("search", (t) -> {
+            search(aniList, t);
+        });
+        commands.put("change", (t) -> {
+            changeAnime(aniList, t);
+        });
+        commands.put("show", (t) -> {
+            if (t.length == 2) {
+                try {
+                    int animeId = Integer.parseInt(t[1]);
+                    printAnime(aniList.getAniList().get(animeId - 1));
+                } catch (NumberFormatException e) {
+                    System.out.println("Please insert only numbers after the show command");
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("This is not a valid id");
+                }
+            }
+        });
+        return commands;
     }
 
     private static void showMenu() {
@@ -53,41 +85,18 @@ public class App {
         // Obligar a los usuarios a que metan el nombre de los animes dentro de ""
     }
 
-    private static void processCommand(AniList aniList, String input) {
+    private static void processCommand(Map<String, Consumer<String[]>> commands, String input) {
         //TODO implementar propio split que no tenga los espacios dentro de las comillas
         String[] tokens = splitExceptQuotes(input);
         String command = tokens[0];
 
-        switch (command) {
-            case "exit":
-                executing = false;
-                return;
-
-            case "show":
-                if (tokens.length == 2) {
-                    try {
-                        int animeId = Integer.parseInt(tokens[1]);
-                        printAnime(aniList.getAniList().get(animeId - 1));
-                    } catch (NumberFormatException e) {
-                        System.out.println("Please insert only numbers after the show command");
-                    } catch (IndexOutOfBoundsException e) {
-                        System.out.println("This is not a valid id");
-                    }
-                }
-                break;
-
-            case "search":
-                search(aniList, tokens);
-                break;
-
-            case "change":
-                changeAnime(aniList, tokens);
-                break;
-
-            default:
-                System.out.println("Unknown command " + command);
-                break;
+        Consumer<String[]> consumer = commands.get(command);
+        if (consumer == null) {
+            System.out.println("Unknown command " + command);
+            return;
         }
+
+        consumer.accept(tokens);
     }
 
     private static void search(AniList aniList, String[] tokens) {
