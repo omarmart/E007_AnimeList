@@ -203,6 +203,11 @@ public class App {
     }
 
     public static void printAnilist(List<Anime> animeList) {
+        if (animeList.size() == 0) {
+            System.out.println("No anime with these parameters was found.");
+            return;
+        }
+
         for (Anime anime : animeList) {
             System.out.println("");
             System.out.println("Id: " + anime.getId());
