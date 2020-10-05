@@ -36,6 +36,30 @@ public class App {
         }
     }
 
+    private static void showMenu() {
+        System.out.println("Available commands: ");
+
+        System.out.println("exit: Exits the program");
+        System.out.println("");
+
+        System.out.println("help: shows the available commands");
+        System.out.println("");
+
+        System.out.println("show [animeID]: Shows the properties of an anime");
+        System.out.println("");
+
+        System.out.println("list: Shows a list of anime (Id and name) depending on the subcommands"); //TODO: change search to list
+        System.out.println("    -anime \"[animeName]\":Searches anime with similar name to [animeName]");
+        System.out.println("    -genre [genre]: Searches anime with the specified genre");
+        System.out.println("    -status [status]: Searches anime with the specified status");
+        System.out.println("");
+
+        System.out.println("change [animeID]: Changes the properties of the specified anime");
+        System.out.println("    -status [status]: Changes the status");
+        System.out.println("    -score [number]: Changes the score");
+        System.out.println("    -progress [number]: Changes the episode progress");
+    }
+
     private static Map<String, Consumer<String[]>> loadCommands(AniList aniList) {
         Map<String, Consumer<String[]>> commands = new HashMap<>();
         commands.put("exit", (t) -> {
@@ -44,8 +68,8 @@ public class App {
         commands.put("help", (t) -> {
             showMenu();
         });
-        commands.put("search", (t) -> {
-            search(aniList, t);
+        commands.put("list", (t) -> {
+            listAnime(aniList, t);
         });
         commands.put("change", (t) -> {
             changeAnime(aniList, t);
@@ -68,34 +92,7 @@ public class App {
         return commands;
     }
 
-    private static void showMenu() {
-        System.out.println("Available commands: ");
-
-        System.out.println("exit: Exits the program");
-        System.out.println("");
-
-        System.out.println("help: shows the available commands");
-        System.out.println("");
-
-        System.out.println("show [animeID]: Shows the properties of an anime");
-        System.out.println("");
-
-        System.out.println("search: Shows a list of anime (Id and name) depending on the subcommands"); //TODO: change search to list
-        System.out.println("    -anime \"[animeName]\":Searches anime with similar name to [animeName]");
-        System.out.println("    -genre [genre]: Searches anime with the specified genre");
-        System.out.println("    -status [status]: Searches anime with the specified status");
-        System.out.println("");
-
-        System.out.println("change [animeID]: Changes the properties of the specified anime");
-        System.out.println("    -status [status]: Changes the status");
-        System.out.println("    -score [number]: Changes the score");
-        System.out.println("    -progress [number]: Changes the episode progress");
-
-        // Obligar a los usuarios a que metan el nombre de los animes dentro de ""
-    }
-
     private static void processCommand(Map<String, Consumer<String[]>> commands, String input) {
-        //TODO implementar propio split que no tenga los espacios dentro de las comillas
         String[] tokens = splitExceptQuotes(input);
         String command = tokens[0];
 
@@ -113,7 +110,7 @@ public class App {
         }
     }
 
-    private static void search(AniList aniList, String[] tokens) {
+    private static void listAnime(AniList aniList, String[] tokens) {
         Predicate<Anime> filters = (anime) -> true;
 
         Map<String, Function<String, Predicate<Anime>>> searchCommands = new HashMap<>();
