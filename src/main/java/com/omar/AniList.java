@@ -78,8 +78,9 @@ public class AniList {
     }
 
     public void updateAnimeFile() throws IOException {
-        FileWriter writer;
-        writer = new FileWriter(fileLocation);
+        FileWriter writer = new FileWriter(fileLocation);
+
+        writer.write("#,Name,Status,Score,Progress,Episodes,Genre\n");
 
         for (Anime anime : animeList) {
             writer.write(anime.parseAnimeToString());

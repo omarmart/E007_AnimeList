@@ -63,20 +63,21 @@ public class Anime {
     }
 
     public String parseAnimeToString() {
-        StringWriter aniString = new StringWriter();
-        aniString.write(this.id);
-        aniString.write(",");
-        aniString.write(this.name);
-        aniString.write(",");
-        aniString.write(this.status.toString());
-        aniString.write(",");
-        aniString.write(this.score);
-        aniString.write(",");
-        aniString.write(this.progress);
-        aniString.write(",");
-        aniString.write(this.episodes);
-        aniString.write(",");
-        aniString.write(this.genre.toString());
+        StringBuilder aniString = new StringBuilder();
+        aniString.append(this.id);
+        aniString.append(",");
+        aniString.append(this.name);
+        aniString.append(",");
+        aniString.append(this.status.toString());
+        aniString.append(",");
+        aniString.append(this.score);
+        aniString.append(",");
+        aniString.append(this.progress);
+        aniString.append(",");
+        aniString.append(this.episodes);
+        aniString.append(",");
+        aniString.append(this.genre.toString());
+        aniString.append("\n");
 
         return aniString.toString();
     }
