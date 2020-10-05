@@ -110,7 +110,7 @@ public class App {
         try {
             consumer.accept(tokens);
         } catch (CommandFormatException e) {
-            System.out.println("Unable to execute search command");
+            System.out.println("Unable to execute command");
             System.out.println(e.getMessage());
         }
     }
@@ -157,7 +157,7 @@ public class App {
                         if (newScore >= 0 && newScore <= 10) {
                             toChange.setScore(newScore);
                         } else {
-                            System.out.println("Score must be between 0 an 10");
+                            throw new CommandFormatException("Score must be between 0 an 10");
                         }
                         break;
 
@@ -166,7 +166,8 @@ public class App {
                         if (newProgress >= 0 && newProgress <= toChange.getEpisodes()) {
                             toChange.setProgress(newProgress);
                         } else {
-                            System.out.println("Progress must be between 0 and " + toChange.getEpisodes());
+                            throw new CommandFormatException(
+                                    "Progress must be between 0 and " + toChange.getEpisodes());
                         }
 
                         break;
