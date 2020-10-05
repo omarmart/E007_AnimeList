@@ -20,7 +20,7 @@ public class App {
 
         try {
             AniList aniList = new AniList("AnimeList.csv");
-            showMenu();
+            System.out.println("Type 'help' to see the command list.");
 
             Map<String, Consumer<String[]>> commands = loadCommands(aniList);
 
@@ -37,27 +37,28 @@ public class App {
     }
 
     private static void showMenu() {
-        System.out.println("Available commands: ");
+        StringBuilder sb = new StringBuilder();
+        sb.append("Available commands: \n\n");
 
-        System.out.println("exit: Exits the program");
-        System.out.println("");
+        sb.append("exit: Exits the program\n\n");
 
-        System.out.println("help: shows the available commands");
-        System.out.println("");
+        sb.append("help: shows the available commands\n\n");
 
-        System.out.println("show [animeID]: Shows the properties of an anime");
-        System.out.println("");
+        sb.append("show <animeID>: Shows the properties of an anime\n\n");
 
-        System.out.println("list: Shows a list of anime (Id and name) depending on the subcommands"); //TODO: change search to list
-        System.out.println("    -anime \"[animeName]\":Searches anime with similar name to [animeName]");
-        System.out.println("    -genre [genre]: Searches anime with the specified genre");
-        System.out.println("    -status [status]: Searches anime with the specified status");
-        System.out.println("");
+        sb.append("list [filters]: Shows a list of anime (Id and name) depending on the subcommands\n");
+        sb.append("Filters may be any combination of:\n");
+        sb.append("    -anime <animeName>:Searches anime with similar name to <animeName>. \n");
+        sb.append("                       Surrounding quotes may be added to ignore anime name whitespaces. \n");
+        sb.append("    -genre <genre>: Searches anime with the specified genre\n");
+        sb.append("    -status <status>: Searches anime with the specified status\n\n");
 
-        System.out.println("change [animeID]: Changes the properties of the specified anime");
-        System.out.println("    -status [status]: Changes the status");
-        System.out.println("    -score [number]: Changes the score");
-        System.out.println("    -progress [number]: Changes the episode progress");
+        sb.append("change <animeID> [changeOptions]: Changes the properties of the specified anime\n");
+        sb.append("ChangeOptions may be any combination of:\n");
+        sb.append("    -status <status>: Changes the status\n");
+        sb.append("    -score <number>: Changes the score\n");
+        sb.append("    -progress <number>: Changes the episode progress\n\n");
+        System.out.println(sb.toString());
     }
 
     private static Map<String, Consumer<String[]>> loadCommands(AniList aniList) {
