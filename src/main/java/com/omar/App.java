@@ -43,6 +43,9 @@ public class App {
         commands.put("exit", (t) -> {
             executing = false;
         });
+        commands.put("help", (t) -> {
+            showMenu();
+        });
         commands.put("search", (t) -> {
             search(aniList, t);
         });
@@ -68,6 +71,9 @@ public class App {
         System.out.println("Available commands: ");
 
         System.out.println("exit: Exits the program");
+        System.out.println("");
+
+        System.out.println("help: shows the available commands");
         System.out.println("");
 
         System.out.println("show [animeID]: Shows the properties of an anime");
