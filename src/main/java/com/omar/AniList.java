@@ -8,11 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 import java.util.function.Predicate;
-
-import javax.swing.undo.StateEdit;
 
 public class AniList {
     private String fileLocation;
@@ -22,10 +19,6 @@ public class AniList {
         animeList = new ArrayList<>();
         loadAnimeList(fileLocation);
         this.fileLocation = fileLocation;
-    }
-
-    private AniList(List<Anime> animeList) {
-        this.animeList = animeList;
     }
 
     public List<Anime> getAniList() {

@@ -1,7 +1,5 @@
 package com.omar;
 
-import java.io.StringWriter;
-
 public class Anime {
 
     private String id;
