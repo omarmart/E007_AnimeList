@@ -116,7 +116,7 @@ public class App {
         Predicate<Anime> filters = (anime) -> true;
 
         Map<String, Function<String, Predicate<Anime>>> searchCommands = new HashMap<>();
-        searchCommands.put("-anime", (name) -> (anime) -> anime.getName().contains(name));
+        searchCommands.put("-anime", (name) -> (anime) -> anime.getName().toLowerCase().contains(name.toLowerCase()));
         searchCommands.put("-genre", (genre) -> (anime) -> anime.getGenre() == Genre.valueOf(genre));
         searchCommands.put("-status", (status) -> (anime) -> anime.getStatus() == Status.valueOf(status));
 
