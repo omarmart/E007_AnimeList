@@ -22,7 +22,7 @@ public class App {
             AniList aniList = new AniList("AnimeList.csv");
             System.out.println("Type 'help' to see the command list.");
 
-            Map<String, Consumer<String[]>> commands = loadCommands(aniList);
+            Map<String, Consumer<String[]>> commands = loadCommands(aniList); //TODO: Clase Command (name, function, help[information])
 
             while (executing) {
                 String input = sc.nextLine();
@@ -137,7 +137,7 @@ public class App {
         }
     }
 
-    private static void changeAnime(AniList aniList, String[] tokens) {
+    private static void changeAnime(AniList aniList, String[] tokens) { //TODO: mejorar esta parte del codigo
         try {
             int animeId = Integer.parseInt(tokens[1]);
             Anime toChange = aniList.getAniList().get(animeId - 1);

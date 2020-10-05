@@ -41,20 +41,18 @@ public class AniList {
             }
 
             try {
-                if (true) { // TODO: verifyLine(parsedLine)
-                    Anime newAnime;
-                    String id = parsedLine[0];
-                    String name = parsedLine[1];
-                    Status status = Status.valueOf(parsedLine[2]);
-                    int score = Integer.parseInt(parsedLine[3]);
-                    int progress = Integer.parseInt(parsedLine[4]);
-                    int episodes = Integer.parseInt(parsedLine[5]);
-                    Genre genre = Genre.valueOf(parsedLine[6]);
+                Anime newAnime;
+                String id = parsedLine[0];
+                String name = parsedLine[1];
+                Status status = Status.valueOf(parsedLine[2]);
+                int score = Integer.parseInt(parsedLine[3]);
+                int progress = Integer.parseInt(parsedLine[4]);
+                int episodes = Integer.parseInt(parsedLine[5]);
+                Genre genre = Genre.valueOf(parsedLine[6]);
 
-                    newAnime = new Anime(id, name, status, score, progress, episodes, genre);
+                newAnime = new Anime(id, name, status, score, progress, episodes, genre);
 
-                    animeList.add(newAnime);
-                }
+                animeList.add(newAnime);
             } catch (Exception e) {
                 throw new BadFormatException(position);
             }
