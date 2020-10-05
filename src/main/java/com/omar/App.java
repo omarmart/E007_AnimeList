@@ -54,15 +54,18 @@ public class App {
         });
         commands.put("show", (t) -> {
             if (t.length == 2) {
-                try {
-                    int animeId = Integer.parseInt(t[1]);
-                    printAnime(aniList.getAniList().get(animeId - 1));
-                } catch (NumberFormatException e) {
-                    System.out.println("Please insert only numbers after the show command");
-                } catch (IndexOutOfBoundsException e) {
-                    System.out.println("This is not a valid id");
-                }
+                throw new CommandFormatException("The correct use for this command is: show [animeID]");
             }
+
+            try {
+                int animeId = Integer.parseInt(t[1]);
+                printAnime(aniList.getAniList().get(animeId - 1));
+            } catch (NumberFormatException e) {
+                System.out.println("Please insert only numbers after the show command");
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("This is not a valid id");
+            }
+
         });
         return commands;
     }
@@ -79,7 +82,7 @@ public class App {
         System.out.println("show [animeID]: Shows the properties of an anime");
         System.out.println("");
 
-        System.out.println("search: Shows a list of anime (Id and name) depending on the subcommands");
+        System.out.println("search: Shows a list of anime (Id and name) depending on the subcommands"); //TODO: change search to list
         System.out.println("    -anime \"[animeName]\":Searches anime with similar name to [animeName]");
         System.out.println("    -genre [genre]: Searches anime with the specified genre");
         System.out.println("    -status [status]: Searches anime with the specified status");
