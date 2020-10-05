@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 import javax.swing.undo.StateEdit;
 
@@ -87,31 +88,13 @@ public class AniList {
         writer.close();
     }
 
-    public List<Anime> searchAnime(Optional<Status> status, Optional<Genre> genre, Optional<String> name) {
+    public List<Anime> searchAnime(Predicate<Anime> filters) {
         List<Anime> searchedAnime = new ArrayList<>(this.animeList);
         Iterator<Anime> it = searchedAnime.iterator();
 
         while (it.hasNext()) {
-            Anime toCheck = it.next();
-
-            if (status.isPresent()) {
-                Status filter = status.get();
-                if (toCheck.getStatus() != filter) {
-                    it.remove();
-                }
-            }
-
-            if (genre.isPresent()) {
-                Genre filter = genre.get();
-                if (toCheck.getGenre() != filter) {
-                    it.remove();
-                }
-            }
-            if (name.isPresent()) {
-                String filter = name.get();
-                if (!toCheck.getName().contains(filter)) {
-                    it.remove();
-                }
+            if (!filters.test(it.next())) {
+                it.remove();
             }
         }
 

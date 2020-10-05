@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class App {
 
@@ -100,26 +102,22 @@ public class App {
     }
 
     private static void search(AniList aniList, String[] tokens) {
-        Optional<Status> status = Optional.empty();
-        Optional<Genre> genre = Optional.empty();
-        Optional<String> name = Optional.empty();
+        Predicate<Anime> filters = (anime) -> true;
+
+        Map<String, Function<String, Predicate<Anime>>> searchCommands = new HashMap<>();
+        searchCommands.put("-anime", (name) -> (anime) -> anime.getName().contains(name));
+        searchCommands.put("-genre", (genre) -> (anime) -> anime.getGenre() == Genre.valueOf(genre));
+        searchCommands.put("-status", (status) -> (anime) -> anime.getStatus() == Status.valueOf(status));
 
         try {
             for (int i = 0; i < tokens.length; i++) {
-                switch (tokens[i]) {
-                    case "-anime":
-                        name = Optional.of(tokens[i + 1]);
-                        break;
-                    case "-genre":
-                        genre = Optional.of(Genre.valueOf(tokens[i + 1]));
-                        break;
-                    case "-status":
-                        status = Optional.of(Status.valueOf(tokens[i + 1]));
-                        break;
+                Function<String, Predicate<Anime>> filterFactory = searchCommands.get(tokens[i]);
+                if (filterFactory != null) {
+                    filters = filters.and(filterFactory.apply(tokens[i + 1]));
                 }
             }
 
-            printAnilist(aniList.searchAnime(status, genre, name));
+            printAnilist(aniList.searchAnime(filters));
 
         } catch (IllegalArgumentException illE) {
             System.out.println("Status/Genre is not a valid");
