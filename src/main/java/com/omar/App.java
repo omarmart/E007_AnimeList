@@ -98,7 +98,12 @@ public class App {
             return;
         }
 
-        consumer.accept(tokens);
+        try {
+            consumer.accept(tokens);
+        } catch (CommandFormatException e) {
+            System.out.println("Unable to execute search command");
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void search(AniList aniList, String[] tokens) {
@@ -113,6 +118,9 @@ public class App {
             for (int i = 0; i < tokens.length; i++) {
                 Function<String, Predicate<Anime>> filterFactory = searchCommands.get(tokens[i]);
                 if (filterFactory != null) {
+                    if (i + 1 >= tokens.length) {
+                        throw new CommandFormatException("Missing parameter for argument " + tokens[i]);
+                    }
                     filters = filters.and(filterFactory.apply(tokens[i + 1]));
                 }
             }
