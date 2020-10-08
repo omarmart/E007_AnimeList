@@ -201,10 +201,7 @@ public class App {
         }
 
         for (Anime anime : animeList) {
-            System.out.println("");
-            System.out.println("Id: " + anime.getId());
-            System.out.println("Name: " + anime.getName());
-            System.out.println("");
+            System.out.println(String.format("#%s %s", anime.getId(), anime.getName()));
         }
     }
 
