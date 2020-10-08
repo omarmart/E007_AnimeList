@@ -186,17 +186,12 @@ public class App {
     }
 
     public static void printAnime(Anime anime) {
-        System.out.println("");
-        System.out.println("- ↓ -----ANIME INFO----- ↓ -");
-        System.out.println("Id: " + anime.getId());
-        System.out.println("Name: " + anime.getName());
-        System.out.println("Status: " + anime.getStatus());
-        System.out.println("Score: " + anime.getScore());
-        System.out.println("Progress: " + anime.getProgress());
-        System.out.println("Episodes: " + anime.getEpisodes());
-        System.out.println("Genre: " + anime.getGenre());
-        System.out.println("- ↑ -----ANIME INFO----- ↑ -");
-        System.out.println("");
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("#%s %s (%s)\n", anime.getId(), anime.getName(), anime.getStatus().toString()));
+        sb.append("  Progress: ").append(anime.getProgress()).append("/").append(anime.getEpisodes()).append("\n");
+        sb.append("  Score: ").append(anime.getScore()).append("\n");
+        sb.append("  Genre: ").append(anime.getGenre()).append("\n");
+        System.out.println(sb.toString());
     }
 
     public static void printAnilist(List<Anime> animeList) {
