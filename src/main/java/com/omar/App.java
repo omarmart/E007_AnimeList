@@ -83,7 +83,7 @@ public class App {
     }
 
     public static void showAnime(AniList aniList, String[] t) {
-        if (t.length == 2) {
+        if (t.length != 2) {
             throw new CommandFormatException("The correct use for this command is: show [animeID]");
         }
 
