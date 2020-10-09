@@ -76,21 +76,25 @@ public class App {
             changeAnime(aniList, t);
         });
         commands.put("show", (t) -> {
-            if (t.length == 2) {
-                throw new CommandFormatException("The correct use for this command is: show [animeID]");
-            }
-
-            try {
-                int animeId = Integer.parseInt(t[1]);
-                printAnime(aniList.getAniList().get(animeId - 1));
-            } catch (NumberFormatException e) {
-                System.out.println("Please insert only numbers after the show command");
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("This is not a valid id");
-            }
+            showAnime(aniList, t);
 
         });
         return commands;
+    }
+
+    public static void showAnime(AniList aniList, String[] t) {
+        if (t.length == 2) {
+            throw new CommandFormatException("The correct use for this command is: show [animeID]");
+        }
+
+        try {
+            int animeId = Integer.parseInt(t[1]);
+            printAnime(aniList.getAniList().get(animeId - 1));
+        } catch (NumberFormatException e) {
+            System.out.println("Please insert only numbers after the show command");
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("This is not a valid id");
+        }
     }
 
     private static void processCommand(Map<String, Consumer<String[]>> commands, String input) {
