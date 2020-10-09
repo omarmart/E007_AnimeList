@@ -206,6 +206,10 @@ public class App {
     }
 
     public static String[] splitExceptQuotes(String orig) {
+        if (orig == null) {
+            throw new IllegalArgumentException("Null input value");
+        }
+
         List<String> result = new ArrayList<>();
         StringBuilder fragment = new StringBuilder();
         boolean insideQuotes = false;
@@ -213,8 +217,10 @@ public class App {
         for (char c : orig.toCharArray()) {
 
             if (c == ' ' && !insideQuotes) {
-                result.add(fragment.toString());
-                fragment = new StringBuilder();
+                if (fragment.length() != 0) {
+                    result.add(fragment.toString());
+                    fragment = new StringBuilder();
+                }
             } else if (c == '"') {
                 insideQuotes = !insideQuotes;
             } else {
@@ -222,7 +228,9 @@ public class App {
             }
         }
 
-        result.add(fragment.toString());
+        if (fragment.length() != 0) {
+            result.add(fragment.toString());
+        }
 
         return result.toArray(new String[0]);
     }
