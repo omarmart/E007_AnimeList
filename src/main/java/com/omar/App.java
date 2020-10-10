@@ -22,11 +22,12 @@ public class App {
             AniList aniList = new AniList("AnimeList.csv");
             System.out.println("Type 'help' to see the command list.");
 
-            Map<String, Consumer<String[]>> commands = loadCommands(aniList); //TODO: Clase Command (name, function, help[information])
+            CommandExecutor commandExecutor = new CommandExecutor();
+            loadCommands(aniList, commandExecutor);
 
             while (executing) {
                 String input = sc.nextLine();
-                processCommand(commands, input);
+                commandExecutor.executeCommand(input);
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not found, restart and try again");
@@ -61,25 +62,26 @@ public class App {
         System.out.println(sb.toString());
     }
 
-    private static Map<String, Consumer<String[]>> loadCommands(AniList aniList) {
-        Map<String, Consumer<String[]>> commands = new HashMap<>();
-        commands.put("exit", (t) -> {
+    private static void loadCommands(AniList aniList, CommandExecutor cExecutor) {
+        cExecutor.registerCommand(new Command("exit", (t) -> {
             executing = false;
-        });
-        commands.put("help", (t) -> {
-            showMenu();
-        });
-        commands.put("list", (t) -> {
-            listAnime(aniList, t);
-        });
-        commands.put("change", (t) -> {
-            changeAnime(aniList, t);
-        });
-        commands.put("show", (t) -> {
-            showAnime(aniList, t);
+        }));
 
-        });
-        return commands;
+        cExecutor.registerCommand(new Command("help", (t) -> {
+            showMenu();
+        }));
+
+        cExecutor.registerCommand(new Command("list", (t) -> {
+            listAnime(aniList, t);
+        }));
+
+        cExecutor.registerCommand(new Command("change", (t) -> {
+            changeAnime(aniList, t);
+        }));
+
+        cExecutor.registerCommand(new Command("show", (t) -> {
+            showAnime(aniList, t);
+        }));
     }
 
     public static void showAnime(AniList aniList, String[] t) {
@@ -94,24 +96,6 @@ public class App {
             System.out.println("Please insert only numbers after the show command");
         } catch (IndexOutOfBoundsException e) {
             System.out.println("This is not a valid id");
-        }
-    }
-
-    private static void processCommand(Map<String, Consumer<String[]>> commands, String input) {
-        String[] tokens = splitExceptQuotes(input);
-        String command = tokens[0];
-
-        Consumer<String[]> consumer = commands.get(command);
-        if (consumer == null) {
-            System.out.println("Unknown command " + command);
-            return;
-        }
-
-        try {
-            consumer.accept(tokens);
-        } catch (CommandFormatException e) {
-            System.out.println("Unable to execute command");
-            System.out.println(e.getMessage());
         }
     }
 
@@ -207,36 +191,6 @@ public class App {
         for (Anime anime : animeList) {
             System.out.println(String.format("#%s %s", anime.getId(), anime.getName()));
         }
-    }
-
-    public static String[] splitExceptQuotes(String orig) {
-        if (orig == null) {
-            throw new IllegalArgumentException("Null input value");
-        }
-
-        List<String> result = new ArrayList<>();
-        StringBuilder fragment = new StringBuilder();
-        boolean insideQuotes = false;
-
-        for (char c : orig.toCharArray()) {
-
-            if (c == ' ' && !insideQuotes) {
-                if (fragment.length() != 0) {
-                    result.add(fragment.toString());
-                    fragment = new StringBuilder();
-                }
-            } else if (c == '"') {
-                insideQuotes = !insideQuotes;
-            } else {
-                fragment.append(c);
-            }
-        }
-
-        if (fragment.length() != 0) {
-            result.add(fragment.toString());
-        }
-
-        return result.toArray(new String[0]);
     }
 
 }
