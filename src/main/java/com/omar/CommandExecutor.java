@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.omar.commands.Command;
+
 public class CommandExecutor { //TODO: Hacer tests 
     Map<String, Command> commands = new HashMap<>();
     //almacenar/ejecutar comandos
